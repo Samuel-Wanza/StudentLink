@@ -1,10 +1,37 @@
+version: '3.8'
+
 services:
   mysql:
-    image: 'mysql:latest'
+    image: mysql:latest
+    container_name: mysql
     environment:
-      - 'MYSQL_DATABASE=mydatabase'
-      - 'MYSQL_PASSWORD=secret'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=myuser'
+      MYSQL_ROOT_PASSWORD: rootpassword # Optional, for root user
+      MYSQL_DATABASE: dbstudentlink
+      MYSQL_USER: wiseowls
+      MYSQL_PASSWORD: wiseowls
     ports:
-      - '3306'
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - studentlink-network
+
+  app:
+    image: your-spring-boot-app:latest # Use the image name from `docker images`
+    container_name: studentlink-app
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dbstudentlink
+      SPRING_DATASOURCE_USERNAME: wiseowls
+      SPRING_DATASOURCE_PASSWORD: wiseowls
+    networks:
+      - studentlink-network
+
+volumes:
+  mysql-data:
+
+networks:
+  studentlink-network:
