@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-StudentLinkApplication<StudentLink>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.wiseowls.StudentLink.StudentLinkApplication",
+            "projectName": "StudentLink",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
